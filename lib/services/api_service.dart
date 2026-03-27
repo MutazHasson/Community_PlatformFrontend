@@ -15,5 +15,37 @@ class ApiService {
       throw Exception("Failed to load issues");
     }
   }
+// Post Issue Method
+static Future<void> createIssue({
+  required String title,
+  required String description,
+}) async {
+  final response = await http.post(
+    Uri.parse("$baseUrl/issues"),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: jsonEncode({
+      "title": title,
+      "description": description,
+    }),
+  );
+
+  if (response.statusCode != 200 && response.statusCode != 201) {
+    throw Exception("Failed to create issue");
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
