@@ -1,3 +1,4 @@
+import 'package:community_platform/screens/create_issue_screen.dart';
 import 'package:flutter/material.dart';
 import '../services/api_service.dart';
 
@@ -69,6 +70,19 @@ class _IssuesScreenState extends State<IssuesScreen> {
        ,);
           
         },
+      ),
+      floatingActionButton: FloatingActionButton(onPressed: () async {
+        final result = await Navigator.push(context, 
+        MaterialPageRoute(builder: (_) => CreateIssueScreen(),
+        ),);
+        //Refresh after returning
+        if(result == true){
+          setState(() {
+            issues = ApiService.fetchIssues();
+          });
+        }
+      },
+      child: Icon(Icons.add),
       ),
     );
   }

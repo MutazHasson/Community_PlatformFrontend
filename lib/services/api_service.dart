@@ -19,6 +19,7 @@ class ApiService {
 static Future<void> createIssue({
   required String title,
   required String description,
+  required int categoryId,
 }) async {
   final response = await http.post(
     Uri.parse("$baseUrl/issues"),
@@ -28,24 +29,34 @@ static Future<void> createIssue({
     body: jsonEncode({
       "title": title,
       "description": description,
+      "categoryId": categoryId, // ✅ NEW
+
     }),
   );
 
   if (response.statusCode != 200 && response.statusCode != 201) {
     throw Exception("Failed to create issue");
   }
+
+}
+  // FetchCategories as DropDown
+  static Future<List<dynamic>> fetchCategories() async {
+  final response = await http.get(
+    Uri.parse("$baseUrl/categories"),
+  );
+
+  if (response.statusCode == 200) {
+    return jsonDecode(response.body);
+  } else {
+    throw Exception("Failed to load categories");
+  }
+}
+
+
 }
 
 
 
 
 
-
-
-
-
-
-
-
-}
 

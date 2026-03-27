@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: IssuesScreen(),
       // TestScreen(),
     );
@@ -32,3 +33,7 @@ class TestScreen extends StatelessWidget {
     );
   }
 }
+
+// git add .
+// git commit -m "meaningful message"
+// git push
