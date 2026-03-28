@@ -1,6 +1,6 @@
-import 'package:community_platform/screens/issues_screen.dart';
+
+import 'package:community_platform/screens/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'services/api_test.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,28 +11,34 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: IssuesScreen(),
+      home: LoginScreen()
+      //IssuesScreen(),
       // TestScreen(),
     );
   }
 }
 
-class TestScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("API Test")),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            ApiTest.fetchIssues();
-          },
-          child: Text("Fetch Issues"),
-        ),
-      ),
-    );
-  }
-}
+
+
+
+
+// API Test Class
+// class TestScreen extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text("API Test")),
+//       body: Center(
+//         child: ElevatedButton(
+//           onPressed: () {
+//             ApiTest.fetchIssues();
+//           },
+//           child: Text("Fetch Issues"),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 // git add .
 // git commit -m "meaningful message"

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
   static const String baseUrl = "http://localhost:5016/api";
@@ -21,18 +22,25 @@ static Future<void> createIssue({
   required String description,
   required int categoryId,
 }) async {
+  final prefs = await SharedPreferences.getInstance();
+  final token = prefs.getString("token");
   final response = await http.post(
     Uri.parse("$baseUrl/issues"),
     headers: {
       "Content-Type": "application/json",
+      "Authorization": "Bearer $token", // 🔥 IMPORTANT
+
     },
     body: jsonEncode({
-      "title": title,
-      "description": description,
-      "categoryId": categoryId, // ✅ NEW
+      "Title": title,
+      "Description": description,
+      "CategoryId": categoryId, // ✅ NEW
 
     }),
   );
+// 🔥 ADD THIS For testing
+// print("STATUS: ${response.statusCode}");
+// print("BODY: ${response.body}");
 
   if (response.statusCode != 200 && response.statusCode != 201) {
     throw Exception("Failed to create issue");
@@ -42,7 +50,7 @@ static Future<void> createIssue({
   // FetchCategories as DropDown
   static Future<List<dynamic>> fetchCategories() async {
   final response = await http.get(
-    Uri.parse("$baseUrl/categories"),
+    Uri.parse("$baseUrl/Category"),
   );
 
   if (response.statusCode == 200) {
@@ -51,6 +59,33 @@ static Future<void> createIssue({
     throw Exception("Failed to load categories");
   }
 }
+
+// Add Login API
+static Future<String> login({
+  //Declare parameter 
+  required String email,   
+  required String password,
+}) async {
+  final response = await http.post(
+    Uri.parse("$baseUrl/auth/login"),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: jsonEncode({
+      "email": email,
+      "password": password,
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+    return data['token']; // ⚠️ depends on your backend
+  } else {
+    throw Exception("Login failed");
+  }
+}
+
+//
 
 
 }

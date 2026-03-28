@@ -33,6 +33,7 @@ Future<void> loadCategories() async {
     setState(() {
       categories = data;
       isLoadingCategories = false;
+      // print("CATEGORIES: $data");  For testing Purpose
     });
   } catch (e) {
     setState(() {
@@ -48,6 +49,9 @@ Future<void> submit() async {
     );
   }
   setState(() => isLoading = true);
+  // To Test
+//   print("TITLE: ${titleController.text}");
+// print("DESC: ${descriptionController.text}");
 
   try {
     await ApiService.createIssue(

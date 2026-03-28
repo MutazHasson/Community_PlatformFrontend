@@ -1,4 +1,5 @@
 import 'package:community_platform/screens/create_issue_screen.dart';
+import 'package:community_platform/screens/issue_detail.dart';
 import 'package:flutter/material.dart';
 import '../services/api_service.dart';
 
@@ -63,6 +64,9 @@ class _IssuesScreenState extends State<IssuesScreen> {
                 child: ListTile(
                   title: Text(issue['title'] ?? "No Title"),
                   subtitle: Text(issue['description'] ?? "No Description"),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => IssueDetailsScreen(issue: issue),));
+                  },
                 ),
               );
             },
