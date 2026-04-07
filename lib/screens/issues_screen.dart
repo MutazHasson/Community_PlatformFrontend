@@ -64,9 +64,24 @@ class _IssuesScreenState extends State<IssuesScreen> {
                 child: ListTile(
                   title: Text(issue['title'] ?? "No Title"),
                   subtitle: Text(issue['description'] ?? "No Description"),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => IssueDetailsScreen(issue: issue),));
+                  onTap: () async {
+                        final result = await Navigator.push(
+                           context,
+                            MaterialPageRoute(
+                              builder: (_) => IssueDetailsScreen(issue: issue),
+                  ),
+             );
+
+             if (result == true) {
+                      setState(() {
+                      issues = ApiService.fetchIssues();
+               });
+                  }
                   },
+                  // onTap: () {
+                  //   Navigator.push(context, MaterialPageRoute(builder: (_) => 
+                  //   IssueDetailsScreen(issue: issue),));
+                  // },
                 ),
               );
             },
@@ -91,3 +106,5 @@ class _IssuesScreenState extends State<IssuesScreen> {
     );
   }
 }
+
+

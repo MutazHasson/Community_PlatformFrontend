@@ -85,7 +85,50 @@ static Future<String> login({
   }
 }
 
-//
+//Update Issue Method
+static Future<void> updateIssue({
+  required int id,
+  required String title,
+  required String description,
+  required int categoryId,
+}) async {
+  final prefs = await SharedPreferences.getInstance();
+  final token = prefs.getString("token");
+
+  final response = await http.put(
+    Uri.parse("$baseUrl/issues/$id"),
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $token",
+    },
+    body: jsonEncode({
+      "Title": title,
+      "Description": description,
+      "CategoryId": categoryId,
+    }),
+  );
+
+  if (response.statusCode != 200) {
+    throw Exception("Failed to update issue");
+  }
+}
+
+// Delete Issue Method
+static Future<void> deleteIssue(int id) async {
+  final prefs = await SharedPreferences.getInstance();
+  final token = prefs.getString("token");
+
+  final response = await http.delete(
+    Uri.parse("$baseUrl/issues/$id"),
+    headers: {
+      "Authorization": "Bearer $token",
+    },
+  );
+
+  if (response.statusCode != 200 && response.statusCode != 204) {
+    throw Exception("Failed to delete issue");
+  }
+}
 
 
 }

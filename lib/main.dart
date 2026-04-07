@@ -1,9 +1,17 @@
 
-import 'package:community_platform/screens/login_screen.dart';
+import 'package:community_platform/providers/auth_provider.dart';
+import 'package:community_platform/screens/register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => AuthProvider()),
+      // ChangeNotifierProvider(create: (_) => IssueProvider()),
+    ],
+
+    child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -11,7 +19,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen()
+      home: RegisterScreen(),
+      // LoginScreen()
       //IssuesScreen(),
       // TestScreen(),
     );
